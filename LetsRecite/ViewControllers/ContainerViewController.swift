@@ -20,11 +20,14 @@ class ContainerViewController: UIViewController {
     let menuVC = MenuViewController()
     let homeVC = HomeViewController()
     var navVC: UINavigationController?
-    lazy var infoVC = InfoViewController()
+    lazy var reciteVC = ReciteViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
+        // Add a tap gesture recognizer to the entire screen
+        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        //view.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view.
         addChildVCs()
     }
@@ -92,8 +95,8 @@ extension ContainerViewController: MenuViewControllerDelegate{
             switch menuItem{
             case .home:
                 self.resetToHome()
-            case .info:
-                self.addInfo()
+            case .recite:
+                self.letsRecite()
             case .appRating:
                 break
             case .shareApp:
@@ -105,8 +108,8 @@ extension ContainerViewController: MenuViewControllerDelegate{
         
     }
     
-    func addInfo(){
-        let vc = infoVC
+    func letsRecite(){
+        let vc = reciteVC
         homeVC.addChild(vc)
         homeVC.view.addSubview(vc.view)
         vc.view.frame = view.frame
@@ -115,8 +118,8 @@ extension ContainerViewController: MenuViewControllerDelegate{
     }
     
     func resetToHome(){
-        infoVC.view.removeFromSuperview()
-        infoVC.didMove(toParent: nil)
+        reciteVC.view.removeFromSuperview()
+        reciteVC.didMove(toParent: nil)
         homeVC.title = "Home"
     }
     

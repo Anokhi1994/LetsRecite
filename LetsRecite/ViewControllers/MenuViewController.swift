@@ -17,7 +17,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     enum MenuOptions: String, CaseIterable {
         case home = "Home"
-        case info = "Information"
+        case recite = "Lets Recite"
         case appRating = "App Rating"
         case shareApp = "Share App"
         case settings = "Settings"
@@ -26,8 +26,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             switch self{
             case .home:
                 return "house"
-            case .info:
-                return "airplane"
+            case .recite:
+                return "speaker.wave.3.fill"
             case .appRating:
                 return "star"
             case .shareApp:

@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FCA7D0BA2AED8F1C006C93E3 /* SideMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCA7D0BA2AED8F1C006C93E3 /* LetsRecite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsRecite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCA7D0BD2AED8F1C006C93E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FCA7D0BF2AED8F1C006C93E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FCA7D0C12AED8F1C006C93E3 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		FCA7D0B12AED8F1C006C93E3 = {
 			isa = PBXGroup;
 			children = (
-				FCA7D0BC2AED8F1C006C93E3 /* SideMenu */,
+				FCA7D0BC2AED8F1C006C93E3 /* LetsRecite */,
 				FCA7D0BB2AED8F1C006C93E3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		FCA7D0BB2AED8F1C006C93E3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FCA7D0BA2AED8F1C006C93E3 /* SideMenu.app */,
+				FCA7D0BA2AED8F1C006C93E3 /* LetsRecite.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FCA7D0BC2AED8F1C006C93E3 /* SideMenu */ = {
+		FCA7D0BC2AED8F1C006C93E3 /* LetsRecite */ = {
 			isa = PBXGroup;
 			children = (
 				FCA7D0BD2AED8F1C006C93E3 /* AppDelegate.swift */,
@@ -67,7 +67,7 @@
 				FCA7D0C82AED8F1D006C93E3 /* LaunchScreen.storyboard */,
 				FCA7D0CB2AED8F1D006C93E3 /* Info.plist */,
 			);
-			path = SideMenu;
+			path = LetsRecite;
 			sourceTree = "<group>";
 		};
 		FCA7D0D12AED9239006C93E3 /* ViewControllers */ = {
@@ -84,9 +84,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FCA7D0B92AED8F1C006C93E3 /* SideMenu */ = {
+		FCA7D0B92AED8F1C006C93E3 /* LetsRecite */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FCA7D0CE2AED8F1D006C93E3 /* Build configuration list for PBXNativeTarget "SideMenu" */;
+			buildConfigurationList = FCA7D0CE2AED8F1D006C93E3 /* Build configuration list for PBXNativeTarget "LetsRecite" */;
 			buildPhases = (
 				FCA7D0B62AED8F1C006C93E3 /* Sources */,
 				FCA7D0B72AED8F1C006C93E3 /* Frameworks */,
@@ -96,9 +96,9 @@
 			);
 			dependencies = (
 			);
-			name = SideMenu;
+			name = LetsRecite;
 			productName = SideMenu;
-			productReference = FCA7D0BA2AED8F1C006C93E3 /* SideMenu.app */;
+			productReference = FCA7D0BA2AED8F1C006C93E3 /* LetsRecite.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -116,7 +116,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FCA7D0B52AED8F1C006C93E3 /* Build configuration list for PBXProject "SideMenu" */;
+			buildConfigurationList = FCA7D0B52AED8F1C006C93E3 /* Build configuration list for PBXProject "LetsRecite" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -129,7 +129,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FCA7D0B92AED8F1C006C93E3 /* SideMenu */,
+				FCA7D0B92AED8F1C006C93E3 /* LetsRecite */,
 			);
 		};
 /* End PBXProject section */
@@ -295,6 +295,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6WMUF23BB8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SideMenu/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -321,6 +322,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6WMUF23BB8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SideMenu/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -343,7 +345,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FCA7D0B52AED8F1C006C93E3 /* Build configuration list for PBXProject "SideMenu" */ = {
+		FCA7D0B52AED8F1C006C93E3 /* Build configuration list for PBXProject "LetsRecite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FCA7D0CC2AED8F1D006C93E3 /* Debug */,
@@ -352,7 +354,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FCA7D0CE2AED8F1D006C93E3 /* Build configuration list for PBXNativeTarget "SideMenu" */ = {
+		FCA7D0CE2AED8F1D006C93E3 /* Build configuration list for PBXNativeTarget "LetsRecite" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FCA7D0CF2AED8F1D006C93E3 /* Debug */,
