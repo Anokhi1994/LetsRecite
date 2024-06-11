@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 protocol HomeViewControllerDelegate: AnyObject {
     func didTapMenuButton()
@@ -37,6 +38,17 @@ class HomeViewController: UIViewController {
         reciteButton.addTarget(self, action: #selector(didTapReciteButton), for: .touchUpInside)
         view.addSubview(reciteButton)
         
+        // Create and configure the microphone permission switch and label
+        let micPermissionLabel = UILabel()
+        micPermissionLabel.text = "Mic Permission"
+        micPermissionLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(micPermissionLabel)
+        
+        let micPermissionSwitch = UISwitch()
+        micPermissionSwitch.translatesAutoresizingMaskIntoConstraints = false
+        micPermissionSwitch.addTarget(self, action: #selector(didToggleMicPermissionSwitch), for: .valueChanged)
+        view.addSubview(micPermissionSwitch)
+        
         // Set up constraints
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -46,7 +58,13 @@ class HomeViewController: UIViewController {
             reciteButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
             reciteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             reciteButton.widthAnchor.constraint(equalToConstant: 200),
-            reciteButton.heightAnchor.constraint(equalToConstant: 50)
+            reciteButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            micPermissionLabel.topAnchor.constraint(equalTo: reciteButton.bottomAnchor, constant: 20),
+            micPermissionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            micPermissionSwitch.centerYAnchor.constraint(equalTo: micPermissionLabel.centerYAnchor),
+            micPermissionSwitch.leadingAnchor.constraint(equalTo: micPermissionLabel.trailingAnchor, constant: 10)
         ])
     }
     
@@ -54,5 +72,21 @@ class HomeViewController: UIViewController {
         // Handle button tap, navigate to the recite screen
         let reciteVC = ReciteViewController()
         navigationController?.pushViewController(reciteVC, animated: true)
+    }
+    
+    @objc private func didToggleMicPermissionSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            // Request microphone permission
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        print("Microphone access granted")
+                    } else {
+                        print("Microphone access denied")
+                        sender.isOn = false
+                    }
+                }
+            }
+        }
     }
 }
