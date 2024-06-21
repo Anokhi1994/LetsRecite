@@ -22,7 +22,7 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
-        if let url = URL(string: "https://1ffb-188-192-84-153.ngrok-free.app") {
+        if let url = URL(string: "https://d417-188-192-84-153.ngrok-free.app") {
             let request = URLRequest(url: url)
             webView.load(request)
         }
