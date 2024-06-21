@@ -47,9 +47,7 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
                             try FileManager.default.removeItem(at: destinationURL)
                         }
                         try FileManager.default.moveItem(at: localURL, to: destinationURL)
-                        DispatchQueue.main.async {
-                            self.presentFileSavedAlert(filePath: destinationURL)
-                        }
+                        // Present alert only when the download button is clicked
                     } catch {
                         print("File move error: \(error)")
                     }
@@ -60,12 +58,14 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
         decisionHandler(.allow)
     }
 
-    func presentFileSavedAlert(filePath: URL) {
+    func presentFileSavedAlert(filePath: URL, actionHandler: @escaping (String) -> Void) {
         let alert = UIAlertController(title: "File Saved", message: "Your file has been saved successfully. Would you like to view or share it now?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "View", style: .default, handler: { _ in
+            actionHandler("View")
             self.previewFile(at: filePath)
         }))
         alert.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
+            actionHandler("Share")
             self.presentShareDialog(fileURL: filePath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -81,12 +81,6 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
     func presentShareDialog(fileURL: URL) {
         let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
-    }
-
-    // MARK: - UIDocumentInteractionControllerDelegate
-
-    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
-        return self
     }
 }
 
@@ -106,7 +100,11 @@ extension ReciteViewController: WKScriptMessageHandler {
         let fileURL = documentsPath.appendingPathComponent(fileName)
         do {
             try data.write(to: fileURL)
-            presentFileSavedAlert(filePath: fileURL)
+            // After saving, wait for user interaction to present the alert
+            presentFileSavedAlert(filePath: fileURL) { action in
+                // Optionally handle different actions here if needed
+                print("User selected: \(action)")
+            }
         } catch {
             print("Error saving file: \(error)")
         }
