@@ -35,29 +35,6 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        if let response = navigationResponse.response as? HTTPURLResponse,
-           response.statusCode == 200,
-           let url = response.url {
-            let downloadTask = URLSession.shared.downloadTask(with: url) { localURL, response, error in
-                if let localURL = localURL {
-                    let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                    let destinationURL = documentsPath.appendingPathComponent(url.lastPathComponent)
-                    
-                    do {
-                        if FileManager.default.fileExists(atPath: destinationURL.path) {
-                            try FileManager.default.removeItem(at: destinationURL)
-                        }
-                        try FileManager.default.moveItem(at: localURL, to: destinationURL)
-                        DispatchQueue.main.async {
-                            self.presentFileSavedAlert(filePath: destinationURL)
-                        }
-                    } catch {
-                        print("File move error: \(error)")
-                    }
-                }
-            }
-            downloadTask.resume()
-        }
         decisionHandler(.allow)
     }
     
@@ -117,7 +94,9 @@ extension ReciteViewController: WKScriptMessageHandler {
         let fileURL = documentsPath.appendingPathComponent(fileName)
         do {
             try data.write(to: fileURL)
-            presentFileSavedAlert(filePath: fileURL)
+            DispatchQueue.main.async {
+                self.presentFileSavedAlert(filePath: fileURL)
+            }
         } catch {
             print("Error saving file: \(error)")
         }
