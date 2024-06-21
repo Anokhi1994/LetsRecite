@@ -21,7 +21,7 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        if let url = URL(string: "https://a1fb-188-192-84-153.ngrok-free.app") {
+        if let url = URL(string: "https://931c-188-192-84-153.ngrok-free.app") {
             let request = URLRequest(url: url)
             webView.load(request)
         }
@@ -81,6 +81,12 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
     func presentShareDialog(fileURL: URL) {
         let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
+    }
+
+    // MARK: - UIDocumentInteractionControllerDelegate
+
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+        return self
     }
 }
 
