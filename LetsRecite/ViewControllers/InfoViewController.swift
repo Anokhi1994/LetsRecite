@@ -1,17 +1,18 @@
 import WebKit
 import UIKit
+import MobileCoreServices
 
 class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentInteractionControllerDelegate {
     var webView: WKWebView!
     var documentController: UIDocumentInteractionController?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.navigationDelegate = self
-
+        
         view.addSubview(webView)
         webView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -20,19 +21,19 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
             webView.topAnchor.constraint(equalTo: view.topAnchor),
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
+        
         if let url = URL(string: "https://1ffb-188-192-84-153.ngrok-free.app") {
             let request = URLRequest(url: url)
             webView.load(request)
         }
-
+        
         setupMessageHandlers()
     }
-
+    
     func setupMessageHandlers() {
         webView.configuration.userContentController.add(self, name: "download")
     }
-
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         if let response = navigationResponse.response as? HTTPURLResponse,
            response.statusCode == 200,
@@ -41,7 +42,7 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
                 if let localURL = localURL {
                     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
                     let destinationURL = documentsPath.appendingPathComponent(url.lastPathComponent)
-
+                    
                     do {
                         if FileManager.default.fileExists(atPath: destinationURL.path) {
                             try FileManager.default.removeItem(at: destinationURL)
@@ -59,32 +60,42 @@ class ReciteViewController: UIViewController, WKNavigationDelegate, UIDocumentIn
         }
         decisionHandler(.allow)
     }
-
+    
     func presentFileSavedAlert(filePath: URL) {
-        let alert = UIAlertController(title: "File Saved", message: "Your file has been saved successfully. Would you like to view or share it now?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "File Saved", message: "Your file has been saved successfully. What would you like to do?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "View", style: .default, handler: { _ in
             self.previewFile(at: filePath)
         }))
         alert.addAction(UIAlertAction(title: "Share", style: .default, handler: { _ in
             self.presentShareDialog(fileURL: filePath)
         }))
+        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { _ in
+            self.saveToFiles(filePath: filePath)
+        }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     func previewFile(at filePath: URL) {
         documentController = UIDocumentInteractionController(url: filePath)
         documentController?.delegate = self
         documentController?.presentPreview(animated: true)
     }
-
+    
     func presentShareDialog(fileURL: URL) {
         let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         present(activityViewController, animated: true, completion: nil)
     }
-
+    
+    func saveToFiles(filePath: URL) {
+        let documentPicker = UIDocumentPickerViewController(url: filePath, in: .exportToService)
+        documentPicker.delegate = self
+        documentPicker.modalPresentationStyle = .formSheet
+        present(documentPicker, animated: true, completion: nil)
+    }
+    
     // MARK: - UIDocumentInteractionControllerDelegate
-
+    
     func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
         return self
     }
@@ -96,7 +107,7 @@ extension ReciteViewController: WKScriptMessageHandler {
             saveFile(base64String: base64String, fileName: filename)
         }
     }
-
+    
     func saveFile(base64String: String, fileName: String) {
         guard let data = Data(base64Encoded: base64String) else {
             print("Error decoding base64 string")
@@ -110,5 +121,18 @@ extension ReciteViewController: WKScriptMessageHandler {
         } catch {
             print("Error saving file: \(error)")
         }
+    }
+}
+
+extension ReciteViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if let selectedURL = urls.first {
+            print("Selected URL: \(selectedURL)")
+            // Handle the selected URL as needed
+        }
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("Document picker was cancelled")
     }
 }
